@@ -67,7 +67,9 @@ export function setSessionTitle(
   title: string,
 ) {
   const storageKey = createSessionTitleStorageKey(identityScopeKey)
-  const titles = { ...getTitlesSnapshot(storageKey), [sessionId]: title }
+  const current = getTitlesSnapshot(storageKey)
+  if (current[sessionId] === title) return
+  const titles = { ...current, [sessionId]: title }
   writeTitles(storageKey, titles)
 }
 
